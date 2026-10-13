@@ -1,0 +1,1220 @@
+{
+ "generated": "2026-10-13T01:29Z",
+ "sport": "nba",
+ "seasons": [
+  2024,
+  2025,
+  2026
+ ],
+ "min_n": 150,
+ "sd": {
+  "margin": 14.61,
+  "total": 18.7
+ },
+ "pairs": {
+  "C:points|margin": {
+   "rho": 0.115,
+   "n": 7665
+  },
+  "C:points|total": {
+   "rho": 0.121,
+   "n": 7665
+  },
+  "C:rebounds|margin": {
+   "rho": 0.108,
+   "n": 7665
+  },
+  "C:rebounds|total": {
+   "rho": -0.058,
+   "n": 7665
+  },
+  "C:assists|margin": {
+   "rho": 0.094,
+   "n": 7644
+  },
+  "C:assists|total": {
+   "rho": 0.087,
+   "n": 7644
+  },
+  "C:threes|margin": {
+   "rho": 0.064,
+   "n": 3859
+  },
+  "C:threes|total": {
+   "rho": 0.104,
+   "n": 3859
+  },
+  "C:pra|margin": {
+   "rho": 0.146,
+   "n": 7665
+  },
+  "C:pra|total": {
+   "rho": 0.08,
+   "n": 7665
+  },
+  "F:points|margin": {
+   "rho": 0.102,
+   "n": 20635
+  },
+  "F:points|total": {
+   "rho": 0.131,
+   "n": 20635
+  },
+  "F:rebounds|margin": {
+   "rho": 0.084,
+   "n": 20635
+  },
+  "F:rebounds|total": {
+   "rho": -0.049,
+   "n": 20635
+  },
+  "F:assists|margin": {
+   "rho": 0.095,
+   "n": 20616
+  },
+  "F:assists|total": {
+   "rho": 0.088,
+   "n": 20616
+  },
+  "F:threes|margin": {
+   "rho": 0.095,
+   "n": 19221
+  },
+  "F:threes|total": {
+   "rho": 0.102,
+   "n": 19221
+  },
+  "F:pra|margin": {
+   "rho": 0.129,
+   "n": 20635
+  },
+  "F:pra|total": {
+   "rho": 0.106,
+   "n": 20635
+  },
+  "G:points|margin": {
+   "rho": 0.104,
+   "n": 26679
+  },
+  "G:points|total": {
+   "rho": 0.151,
+   "n": 26679
+  },
+  "G:rebounds|margin": {
+   "rho": 0.057,
+   "n": 26679
+  },
+  "G:rebounds|total": {
+   "rho": -0.05,
+   "n": 26679
+  },
+  "G:assists|margin": {
+   "rho": 0.103,
+   "n": 26677
+  },
+  "G:assists|total": {
+   "rho": 0.112,
+   "n": 26677
+  },
+  "G:threes|margin": {
+   "rho": 0.119,
+   "n": 26262
+  },
+  "G:threes|total": {
+   "rho": 0.122,
+   "n": 26262
+  },
+  "G:pra|margin": {
+   "rho": 0.127,
+   "n": 26679
+  },
+  "G:pra|total": {
+   "rho": 0.14,
+   "n": 26679
+  },
+  "margin|total": {
+   "rho": 0.01,
+   "n": 3455
+  },
+  "same:C:points|rebounds": {
+   "rho": 0.388,
+   "n": 7690
+  },
+  "same:F:points|rebounds": {
+   "rho": 0.324,
+   "n": 20703
+  },
+  "same:G:points|rebounds": {
+   "rho": 0.268,
+   "n": 26755
+  },
+  "same:C:points|assists": {
+   "rho": 0.167,
+   "n": 7668
+  },
+  "same:F:points|assists": {
+   "rho": 0.18,
+   "n": 20684
+  },
+  "same:G:points|assists": {
+   "rho": 0.213,
+   "n": 26753
+  },
+  "same:C:points|threes": {
+   "rho": 0.582,
+   "n": 3869
+  },
+  "same:F:points|threes": {
+   "rho": 0.674,
+   "n": 19281
+  },
+  "same:G:points|threes": {
+   "rho": 0.723,
+   "n": 26337
+  },
+  "same:C:points|pra": {
+   "rho": 0.886,
+   "n": 7690
+  },
+  "same:F:points|pra": {
+   "rho": 0.911,
+   "n": 20703
+  },
+  "same:G:points|pra": {
+   "rho": 0.919,
+   "n": 26755
+  },
+  "same:C:rebounds|assists": {
+   "rho": 0.214,
+   "n": 7668
+  },
+  "same:F:rebounds|assists": {
+   "rho": 0.225,
+   "n": 20684
+  },
+  "same:G:rebounds|assists": {
+   "rho": 0.234,
+   "n": 26753
+  },
+  "same:C:rebounds|threes": {
+   "rho": 0.117,
+   "n": 3869
+  },
+  "same:F:rebounds|threes": {
+   "rho": 0.144,
+   "n": 19281
+  },
+  "same:G:rebounds|threes": {
+   "rho": 0.141,
+   "n": 26337
+  },
+  "same:C:rebounds|pra": {
+   "rho": 0.726,
+   "n": 7690
+  },
+  "same:F:rebounds|pra": {
+   "rho": 0.625,
+   "n": 20703
+  },
+  "same:G:rebounds|pra": {
+   "rho": 0.53,
+   "n": 26755
+  },
+  "same:C:assists|threes": {
+   "rho": 0.114,
+   "n": 3868
+  },
+  "same:F:assists|threes": {
+   "rho": 0.106,
+   "n": 19263
+  },
+  "same:G:assists|threes": {
+   "rho": 0.125,
+   "n": 26335
+  },
+  "same:C:assists|pra": {
+   "rho": 0.392,
+   "n": 7668
+  },
+  "same:F:assists|pra": {
+   "rho": 0.416,
+   "n": 20684
+  },
+  "same:G:assists|pra": {
+   "rho": 0.483,
+   "n": 26753
+  },
+  "same:C:threes|pra": {
+   "rho": 0.492,
+   "n": 3869
+  },
+  "same:F:threes|pra": {
+   "rho": 0.588,
+   "n": 19281
+  },
+  "same:G:threes|pra": {
+   "rho": 0.643,
+   "n": 26337
+  },
+  "team:C:points|C:points": {
+   "rho": -0.09,
+   "n": 2324
+  },
+  "team:C:points|C:rebounds": {
+   "rho": -0.086,
+   "n": 2324
+  },
+  "team:C:points|C:threes": {
+   "rho": -0.056,
+   "n": 1274
+  },
+  "team:C:points|C:pra": {
+   "rho": -0.1,
+   "n": 2324
+  },
+  "team:C:rebounds|C:rebounds": {
+   "rho": -0.05,
+   "n": 2324
+  },
+  "team:C:rebounds|C:threes": {
+   "rho": -0.023,
+   "n": 1274
+  },
+  "team:C:assists|C:points": {
+   "rho": -0.026,
+   "n": 2309
+  },
+  "team:C:assists|C:rebounds": {
+   "rho": -0.049,
+   "n": 2309
+  },
+  "team:C:assists|C:assists": {
+   "rho": -0.01,
+   "n": 2303
+  },
+  "team:C:assists|C:threes": {
+   "rho": 0.01,
+   "n": 1260
+  },
+  "team:C:assists|C:pra": {
+   "rho": -0.041,
+   "n": 2309
+  },
+  "team:C:threes|C:threes": {
+   "rho": -0.093,
+   "n": 437
+  },
+  "team:C:pra|C:rebounds": {
+   "rho": -0.094,
+   "n": 2324
+  },
+  "team:C:pra|C:threes": {
+   "rho": -0.052,
+   "n": 1274
+  },
+  "team:C:pra|C:pra": {
+   "rho": -0.102,
+   "n": 2324
+  },
+  "team:C:points|F:points": {
+   "rho": -0.009,
+   "n": 20973
+  },
+  "team:C:points|F:rebounds": {
+   "rho": 0.023,
+   "n": 20973
+  },
+  "team:C:points|F:assists": {
+   "rho": 0.061,
+   "n": 20945
+  },
+  "team:C:points|F:threes": {
+   "rho": -0.013,
+   "n": 19709
+  },
+  "team:C:points|F:pra": {
+   "rho": 0.013,
+   "n": 20973
+  },
+  "team:C:rebounds|F:points": {
+   "rho": 0.017,
+   "n": 20973
+  },
+  "team:C:rebounds|F:rebounds": {
+   "rho": -0.001,
+   "n": 20973
+  },
+  "team:C:rebounds|F:assists": {
+   "rho": 0.006,
+   "n": 20945
+  },
+  "team:C:rebounds|F:threes": {
+   "rho": 0.007,
+   "n": 19709
+  },
+  "team:C:rebounds|F:pra": {
+   "rho": 0.013,
+   "n": 20973
+  },
+  "team:C:assists|F:points": {
+   "rho": 0.047,
+   "n": 20921
+  },
+  "team:C:assists|F:rebounds": {
+   "rho": -0.009,
+   "n": 20921
+  },
+  "team:C:assists|F:assists": {
+   "rho": -0.002,
+   "n": 20894
+  },
+  "team:C:assists|F:threes": {
+   "rho": 0.032,
+   "n": 19658
+  },
+  "team:C:assists|F:pra": {
+   "rho": 0.032,
+   "n": 20921
+  },
+  "team:C:threes|F:points": {
+   "rho": -0.027,
+   "n": 10264
+  },
+  "team:C:threes|F:rebounds": {
+   "rho": -0.007,
+   "n": 10264
+  },
+  "team:C:threes|F:assists": {
+   "rho": 0.035,
+   "n": 10249
+  },
+  "team:C:threes|F:threes": {
+   "rho": -0.016,
+   "n": 9664
+  },
+  "team:C:threes|F:pra": {
+   "rho": -0.015,
+   "n": 10264
+  },
+  "team:C:pra|F:points": {
+   "rho": 0.01,
+   "n": 20973
+  },
+  "team:C:pra|F:rebounds": {
+   "rho": 0.014,
+   "n": 20973
+  },
+  "team:C:pra|F:assists": {
+   "rho": 0.043,
+   "n": 20945
+  },
+  "team:C:pra|F:threes": {
+   "rho": -0.0,
+   "n": 19709
+  },
+  "team:C:pra|F:pra": {
+   "rho": 0.021,
+   "n": 20973
+  },
+  "team:C:points|G:points": {
+   "rho": -0.005,
+   "n": 29964
+  },
+  "team:C:points|G:rebounds": {
+   "rho": 0.026,
+   "n": 29964
+  },
+  "team:C:points|G:assists": {
+   "rho": 0.092,
+   "n": 29963
+  },
+  "team:C:points|G:threes": {
+   "rho": -0.007,
+   "n": 29522
+  },
+  "team:C:points|G:pra": {
+   "rho": 0.027,
+   "n": 29964
+  },
+  "team:C:rebounds|G:points": {
+   "rho": 0.029,
+   "n": 29964
+  },
+  "team:C:rebounds|G:rebounds": {
+   "rho": 0.012,
+   "n": 29964
+  },
+  "team:C:rebounds|G:assists": {
+   "rho": 0.025,
+   "n": 29963
+  },
+  "team:C:rebounds|G:threes": {
+   "rho": 0.014,
+   "n": 29522
+  },
+  "team:C:rebounds|G:pra": {
+   "rho": 0.034,
+   "n": 29964
+  },
+  "team:C:assists|G:points": {
+   "rho": 0.063,
+   "n": 29886
+  },
+  "team:C:assists|G:rebounds": {
+   "rho": 0.011,
+   "n": 29886
+  },
+  "team:C:assists|G:assists": {
+   "rho": 0.003,
+   "n": 29885
+  },
+  "team:C:assists|G:threes": {
+   "rho": 0.052,
+   "n": 29444
+  },
+  "team:C:assists|G:pra": {
+   "rho": 0.054,
+   "n": 29886
+  },
+  "team:C:threes|G:points": {
+   "rho": -0.01,
+   "n": 15189
+  },
+  "team:C:threes|G:rebounds": {
+   "rho": -0.005,
+   "n": 15189
+  },
+  "team:C:threes|G:assists": {
+   "rho": 0.066,
+   "n": 15189
+  },
+  "team:C:threes|G:threes": {
+   "rho": -0.001,
+   "n": 14975
+  },
+  "team:C:threes|G:pra": {
+   "rho": 0.007,
+   "n": 15189
+  },
+  "team:C:pra|G:points": {
+   "rho": 0.021,
+   "n": 29964
+  },
+  "team:C:pra|G:rebounds": {
+   "rho": 0.025,
+   "n": 29964
+  },
+  "team:C:pra|G:assists": {
+   "rho": 0.075,
+   "n": 29963
+  },
+  "team:C:pra|G:threes": {
+   "rho": 0.011,
+   "n": 29522
+  },
+  "team:C:pra|G:pra": {
+   "rho": 0.044,
+   "n": 29964
+  },
+  "team:F:points|F:points": {
+   "rho": -0.021,
+   "n": 25872
+  },
+  "team:F:points|F:rebounds": {
+   "rho": 0.011,
+   "n": 25872
+  },
+  "team:F:points|F:threes": {
+   "rho": -0.021,
+   "n": 23996
+  },
+  "team:F:points|F:pra": {
+   "rho": -0.003,
+   "n": 25872
+  },
+  "team:F:rebounds|F:rebounds": {
+   "rho": -0.003,
+   "n": 25872
+  },
+  "team:F:rebounds|F:threes": {
+   "rho": -0.002,
+   "n": 23996
+  },
+  "team:F:assists|F:points": {
+   "rho": 0.057,
+   "n": 25843
+  },
+  "team:F:assists|F:rebounds": {
+   "rho": 0.002,
+   "n": 25843
+  },
+  "team:F:assists|F:assists": {
+   "rho": 0.002,
+   "n": 25825
+  },
+  "team:F:assists|F:threes": {
+   "rho": 0.052,
+   "n": 23968
+  },
+  "team:F:assists|F:pra": {
+   "rho": 0.044,
+   "n": 25843
+  },
+  "team:F:threes|F:threes": {
+   "rho": -0.007,
+   "n": 22141
+  },
+  "team:F:pra|F:rebounds": {
+   "rho": 0.008,
+   "n": 25872
+  },
+  "team:F:pra|F:threes": {
+   "rho": -0.006,
+   "n": 23996
+  },
+  "team:F:pra|F:pra": {
+   "rho": 0.01,
+   "n": 25872
+  },
+  "team:F:points|G:points": {
+   "rho": -0.004,
+   "n": 76381
+  },
+  "team:F:points|G:rebounds": {
+   "rho": 0.014,
+   "n": 76381
+  },
+  "team:F:points|G:assists": {
+   "rho": 0.077,
+   "n": 76372
+  },
+  "team:F:points|G:threes": {
+   "rho": -0.008,
+   "n": 75008
+  },
+  "team:F:points|G:pra": {
+   "rho": 0.021,
+   "n": 76381
+  },
+  "team:F:rebounds|G:points": {
+   "rho": 0.024,
+   "n": 76381
+  },
+  "team:F:rebounds|G:rebounds": {
+   "rho": 0.002,
+   "n": 76381
+  },
+  "team:F:rebounds|G:assists": {
+   "rho": 0.02,
+   "n": 76372
+  },
+  "team:F:rebounds|G:threes": {
+   "rho": 0.012,
+   "n": 75008
+  },
+  "team:F:rebounds|G:pra": {
+   "rho": 0.025,
+   "n": 76381
+  },
+  "team:F:assists|G:points": {
+   "rho": 0.061,
+   "n": 76317
+  },
+  "team:F:assists|G:rebounds": {
+   "rho": 0.004,
+   "n": 76317
+  },
+  "team:F:assists|G:assists": {
+   "rho": 0.01,
+   "n": 76308
+  },
+  "team:F:assists|G:threes": {
+   "rho": 0.063,
+   "n": 74944
+  },
+  "team:F:assists|G:pra": {
+   "rho": 0.051,
+   "n": 76317
+  },
+  "team:F:threes|G:points": {
+   "rho": -0.009,
+   "n": 71017
+  },
+  "team:F:threes|G:rebounds": {
+   "rho": -0.003,
+   "n": 71017
+  },
+  "team:F:threes|G:assists": {
+   "rho": 0.067,
+   "n": 71008
+  },
+  "team:F:threes|G:threes": {
+   "rho": 0.0,
+   "n": 69681
+  },
+  "team:F:threes|G:pra": {
+   "rho": 0.011,
+   "n": 71017
+  },
+  "team:F:pra|G:points": {
+   "rho": 0.018,
+   "n": 76381
+  },
+  "team:F:pra|G:rebounds": {
+   "rho": 0.013,
+   "n": 76381
+  },
+  "team:F:pra|G:assists": {
+   "rho": 0.067,
+   "n": 76372
+  },
+  "team:F:pra|G:threes": {
+   "rho": 0.011,
+   "n": 75008
+  },
+  "team:F:pra|G:pra": {
+   "rho": 0.036,
+   "n": 76381
+  },
+  "team:G:points|G:points": {
+   "rho": -0.008,
+   "n": 43121
+  },
+  "team:G:points|G:rebounds": {
+   "rho": 0.02,
+   "n": 43121
+  },
+  "team:G:points|G:threes": {
+   "rho": -0.017,
+   "n": 42449
+  },
+  "team:G:points|G:pra": {
+   "rho": 0.013,
+   "n": 43121
+  },
+  "team:G:rebounds|G:rebounds": {
+   "rho": 0.004,
+   "n": 43121
+  },
+  "team:G:rebounds|G:threes": {
+   "rho": -0.002,
+   "n": 42449
+  },
+  "team:G:assists|G:points": {
+   "rho": 0.06,
+   "n": 43121
+  },
+  "team:G:assists|G:rebounds": {
+   "rho": 0.002,
+   "n": 43121
+  },
+  "team:G:assists|G:assists": {
+   "rho": -0.003,
+   "n": 43117
+  },
+  "team:G:assists|G:threes": {
+   "rho": 0.055,
+   "n": 42449
+  },
+  "team:G:assists|G:pra": {
+   "rho": 0.047,
+   "n": 43121
+  },
+  "team:G:threes|G:threes": {
+   "rho": -0.001,
+   "n": 41712
+  },
+  "team:G:pra|G:rebounds": {
+   "rho": 0.019,
+   "n": 43121
+  },
+  "team:G:pra|G:threes": {
+   "rho": 0.0,
+   "n": 42449
+  },
+  "team:G:pra|G:pra": {
+   "rho": 0.026,
+   "n": 43121
+  },
+  "opp:C:points|C:points": {
+   "rho": 0.016,
+   "n": 4238
+  },
+  "opp:C:points|C:rebounds": {
+   "rho": -0.032,
+   "n": 4238
+  },
+  "opp:C:points|C:threes": {
+   "rho": 0.033,
+   "n": 2070
+  },
+  "opp:C:points|C:pra": {
+   "rho": -0.003,
+   "n": 4238
+  },
+  "opp:C:rebounds|C:rebounds": {
+   "rho": 0.037,
+   "n": 4238
+  },
+  "opp:C:rebounds|C:threes": {
+   "rho": -0.012,
+   "n": 2070
+  },
+  "opp:C:assists|C:points": {
+   "rho": 0.015,
+   "n": 4236
+  },
+  "opp:C:assists|C:rebounds": {
+   "rho": -0.01,
+   "n": 4236
+  },
+  "opp:C:assists|C:assists": {
+   "rho": 0.01,
+   "n": 4212
+  },
+  "opp:C:assists|C:threes": {
+   "rho": 0.02,
+   "n": 2069
+  },
+  "opp:C:assists|C:pra": {
+   "rho": 0.007,
+   "n": 4236
+  },
+  "opp:C:threes|C:threes": {
+   "rho": -0.048,
+   "n": 1058
+  },
+  "opp:C:pra|C:rebounds": {
+   "rho": -0.008,
+   "n": 4238
+  },
+  "opp:C:pra|C:threes": {
+   "rho": 0.026,
+   "n": 2070
+  },
+  "opp:C:pra|C:pra": {
+   "rho": 0.011,
+   "n": 4238
+  },
+  "opp:C:points|F:points": {
+   "rho": 0.014,
+   "n": 22917
+  },
+  "opp:C:points|F:rebounds": {
+   "rho": -0.005,
+   "n": 22917
+  },
+  "opp:C:points|F:assists": {
+   "rho": 0.002,
+   "n": 22898
+  },
+  "opp:C:points|F:threes": {
+   "rho": 0.007,
+   "n": 21338
+  },
+  "opp:C:points|F:pra": {
+   "rho": 0.01,
+   "n": 22917
+  },
+  "opp:C:rebounds|F:points": {
+   "rho": -0.006,
+   "n": 22917
+  },
+  "opp:C:rebounds|F:rebounds": {
+   "rho": 0.019,
+   "n": 22917
+  },
+  "opp:C:rebounds|F:assists": {
+   "rho": -0.017,
+   "n": 22898
+  },
+  "opp:C:rebounds|F:threes": {
+   "rho": -0.002,
+   "n": 21338
+  },
+  "opp:C:rebounds|F:pra": {
+   "rho": -0.002,
+   "n": 22917
+  },
+  "opp:C:assists|F:points": {
+   "rho": 0.002,
+   "n": 22860
+  },
+  "opp:C:assists|F:rebounds": {
+   "rho": -0.025,
+   "n": 22860
+  },
+  "opp:C:assists|F:assists": {
+   "rho": 0.01,
+   "n": 22841
+  },
+  "opp:C:assists|F:threes": {
+   "rho": 0.004,
+   "n": 21285
+  },
+  "opp:C:assists|F:pra": {
+   "rho": -0.006,
+   "n": 22860
+  },
+  "opp:C:threes|F:points": {
+   "rho": 0.015,
+   "n": 11510
+  },
+  "opp:C:threes|F:rebounds": {
+   "rho": 0.022,
+   "n": 11510
+  },
+  "opp:C:threes|F:assists": {
+   "rho": 0.005,
+   "n": 11497
+  },
+  "opp:C:threes|F:threes": {
+   "rho": 0.007,
+   "n": 10712
+  },
+  "opp:C:threes|F:pra": {
+   "rho": 0.02,
+   "n": 11510
+  },
+  "opp:C:pra|F:points": {
+   "rho": 0.008,
+   "n": 22917
+  },
+  "opp:C:pra|F:rebounds": {
+   "rho": 0.001,
+   "n": 22917
+  },
+  "opp:C:pra|F:assists": {
+   "rho": -0.003,
+   "n": 22898
+  },
+  "opp:C:pra|F:threes": {
+   "rho": 0.006,
+   "n": 21338
+  },
+  "opp:C:pra|F:pra": {
+   "rho": 0.005,
+   "n": 22917
+  },
+  "opp:C:points|G:points": {
+   "rho": 0.015,
+   "n": 29826
+  },
+  "opp:C:points|G:rebounds": {
+   "rho": -0.011,
+   "n": 29826
+  },
+  "opp:C:points|G:assists": {
+   "rho": 0.007,
+   "n": 29822
+  },
+  "opp:C:points|G:threes": {
+   "rho": 0.004,
+   "n": 29357
+  },
+  "opp:C:points|G:pra": {
+   "rho": 0.01,
+   "n": 29826
+  },
+  "opp:C:rebounds|G:points": {
+   "rho": -0.012,
+   "n": 29826
+  },
+  "opp:C:rebounds|G:rebounds": {
+   "rho": 0.021,
+   "n": 29826
+  },
+  "opp:C:rebounds|G:assists": {
+   "rho": -0.007,
+   "n": 29822
+  },
+  "opp:C:rebounds|G:threes": {
+   "rho": -0.007,
+   "n": 29357
+  },
+  "opp:C:rebounds|G:pra": {
+   "rho": -0.007,
+   "n": 29826
+  },
+  "opp:C:assists|G:points": {
+   "rho": -0.001,
+   "n": 29740
+  },
+  "opp:C:assists|G:rebounds": {
+   "rho": -0.012,
+   "n": 29740
+  },
+  "opp:C:assists|G:assists": {
+   "rho": 0.001,
+   "n": 29736
+  },
+  "opp:C:assists|G:threes": {
+   "rho": -0.004,
+   "n": 29273
+  },
+  "opp:C:assists|G:pra": {
+   "rho": -0.004,
+   "n": 29740
+  },
+  "opp:C:threes|G:points": {
+   "rho": 0.008,
+   "n": 14995
+  },
+  "opp:C:threes|G:rebounds": {
+   "rho": -0.009,
+   "n": 14995
+  },
+  "opp:C:threes|G:assists": {
+   "rho": -0.002,
+   "n": 14993
+  },
+  "opp:C:threes|G:threes": {
+   "rho": 0.001,
+   "n": 14758
+  },
+  "opp:C:threes|G:pra": {
+   "rho": 0.003,
+   "n": 14995
+  },
+  "opp:C:pra|G:points": {
+   "rho": 0.006,
+   "n": 29826
+  },
+  "opp:C:pra|G:rebounds": {
+   "rho": -0.001,
+   "n": 29826
+  },
+  "opp:C:pra|G:assists": {
+   "rho": 0.003,
+   "n": 29822
+  },
+  "opp:C:pra|G:threes": {
+   "rho": -0.001,
+   "n": 29357
+  },
+  "opp:C:pra|G:pra": {
+   "rho": 0.005,
+   "n": 29826
+  },
+  "opp:F:points|F:points": {
+   "rho": 0.023,
+   "n": 30881
+  },
+  "opp:F:points|F:rebounds": {
+   "rho": -0.01,
+   "n": 30881
+  },
+  "opp:F:points|F:threes": {
+   "rho": 0.014,
+   "n": 28865
+  },
+  "opp:F:points|F:pra": {
+   "rho": 0.017,
+   "n": 30881
+  },
+  "opp:F:rebounds|F:rebounds": {
+   "rho": 0.007,
+   "n": 30881
+  },
+  "opp:F:rebounds|F:threes": {
+   "rho": -0.003,
+   "n": 28865
+  },
+  "opp:F:assists|F:points": {
+   "rho": 0.015,
+   "n": 30859
+  },
+  "opp:F:assists|F:rebounds": {
+   "rho": -0.001,
+   "n": 30859
+  },
+  "opp:F:assists|F:assists": {
+   "rho": -0.007,
+   "n": 30841
+  },
+  "opp:F:assists|F:threes": {
+   "rho": 0.008,
+   "n": 28843
+  },
+  "opp:F:assists|F:pra": {
+   "rho": 0.011,
+   "n": 30859
+  },
+  "opp:F:threes|F:threes": {
+   "rho": 0.006,
+   "n": 26745
+  },
+  "opp:F:pra|F:rebounds": {
+   "rho": -0.005,
+   "n": 30881
+  },
+  "opp:F:pra|F:threes": {
+   "rho": 0.012,
+   "n": 28865
+  },
+  "opp:F:pra|F:pra": {
+   "rho": 0.015,
+   "n": 30881
+  },
+  "opp:F:points|G:points": {
+   "rho": 0.016,
+   "n": 79705
+  },
+  "opp:F:points|G:rebounds": {
+   "rho": 0.0,
+   "n": 79705
+  },
+  "opp:F:points|G:assists": {
+   "rho": 0.014,
+   "n": 79700
+  },
+  "opp:F:points|G:threes": {
+   "rho": 0.008,
+   "n": 78472
+  },
+  "opp:F:points|G:pra": {
+   "rho": 0.018,
+   "n": 79705
+  },
+  "opp:F:rebounds|G:points": {
+   "rho": -0.011,
+   "n": 79705
+  },
+  "opp:F:rebounds|G:rebounds": {
+   "rho": 0.016,
+   "n": 79705
+  },
+  "opp:F:rebounds|G:assists": {
+   "rho": -0.005,
+   "n": 79700
+  },
+  "opp:F:rebounds|G:threes": {
+   "rho": -0.015,
+   "n": 78472
+  },
+  "opp:F:rebounds|G:pra": {
+   "rho": -0.006,
+   "n": 79705
+  },
+  "opp:F:assists|G:points": {
+   "rho": 0.007,
+   "n": 79630
+  },
+  "opp:F:assists|G:rebounds": {
+   "rho": -0.008,
+   "n": 79630
+  },
+  "opp:F:assists|G:assists": {
+   "rho": 0.009,
+   "n": 79625
+  },
+  "opp:F:assists|G:threes": {
+   "rho": -0.001,
+   "n": 78398
+  },
+  "opp:F:assists|G:pra": {
+   "rho": 0.006,
+   "n": 79630
+  },
+  "opp:F:threes|G:points": {
+   "rho": 0.005,
+   "n": 74237
+  },
+  "opp:F:threes|G:rebounds": {
+   "rho": -0.004,
+   "n": 74237
+  },
+  "opp:F:threes|G:assists": {
+   "rho": 0.007,
+   "n": 74232
+  },
+  "opp:F:threes|G:threes": {
+   "rho": -0.0,
+   "n": 73099
+  },
+  "opp:F:threes|G:pra": {
+   "rho": 0.005,
+   "n": 74237
+  },
+  "opp:F:pra|G:points": {
+   "rho": 0.01,
+   "n": 79705
+  },
+  "opp:F:pra|G:rebounds": {
+   "rho": 0.004,
+   "n": 79705
+  },
+  "opp:F:pra|G:assists": {
+   "rho": 0.011,
+   "n": 79700
+  },
+  "opp:F:pra|G:threes": {
+   "rho": 0.001,
+   "n": 78472
+  },
+  "opp:F:pra|G:pra": {
+   "rho": 0.013,
+   "n": 79705
+  },
+  "opp:G:points|G:points": {
+   "rho": 0.018,
+   "n": 51767
+  },
+  "opp:G:points|G:rebounds": {
+   "rho": -0.007,
+   "n": 51767
+  },
+  "opp:G:points|G:threes": {
+   "rho": 0.009,
+   "n": 50983
+  },
+  "opp:G:points|G:pra": {
+   "rho": 0.015,
+   "n": 51767
+  },
+  "opp:G:rebounds|G:rebounds": {
+   "rho": 0.022,
+   "n": 51767
+  },
+  "opp:G:rebounds|G:threes": {
+   "rho": -0.009,
+   "n": 50983
+  },
+  "opp:G:assists|G:points": {
+   "rho": 0.019,
+   "n": 51764
+  },
+  "opp:G:assists|G:rebounds": {
+   "rho": 0.001,
+   "n": 51764
+  },
+  "opp:G:assists|G:assists": {
+   "rho": 0.012,
+   "n": 51759
+  },
+  "opp:G:assists|G:threes": {
+   "rho": 0.014,
+   "n": 50980
+  },
+  "opp:G:assists|G:pra": {
+   "rho": 0.018,
+   "n": 51764
+  },
+  "opp:G:threes|G:threes": {
+   "rho": -0.002,
+   "n": 50138
+  },
+  "opp:G:pra|G:rebounds": {
+   "rho": 0.0,
+   "n": 51767
+  },
+  "opp:G:pra|G:threes": {
+   "rho": 0.009,
+   "n": 50983
+  },
+  "opp:G:pra|G:pra": {
+   "rho": 0.017,
+   "n": 51767
+  }
+ }
+}
