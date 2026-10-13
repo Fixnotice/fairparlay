@@ -144,6 +144,39 @@ b{font-weight:700}
 .wi .t span{color:var(--muted);font-size:12px}
 .wi.hit{background:linear-gradient(90deg,rgba(25,227,138,.14),transparent);box-shadow:inset 3px 0 0 var(--green)}
 .wi .rm{color:var(--dim);font-size:18px;line-height:1;padding:0 4px}
+/* pro */
+.probtn{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f7c948,#f0a020);color:#2a1a00;font-weight:900;padding:9px 14px;border-radius:12px;box-shadow:0 6px 18px rgba(247,201,72,.25);transition:transform .25s var(--ease)}
+.probtn:hover{transform:translateY(-1px)}
+.propill{display:inline-flex;align-items:center;gap:6px;background:#3b2f0e;color:var(--gold);font-weight:900;font-size:12px;letter-spacing:.5px;padding:7px 12px;border-radius:999px;border:1px solid #5a4712}
+.lockwrap{position:relative}
+.blur{filter:blur(6px);pointer-events:none;user-select:none;opacity:.7}
+.lockcta{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:16px}
+.lockcta b{font-size:15px}
+.lockcta span{color:var(--muted);font-size:12.5px;max-width:320px}
+.more.locked{color:var(--gold)}
+.modal{position:fixed;inset:0;background:rgba(5,8,16,.7);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:80;padding:16px}
+.modal.show{display:flex}
+.mbox{position:relative;width:100%;max-width:440px;background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:22px 22px 18px;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:rise .35s var(--ease) both;max-height:92vh;overflow:auto}
+.mclose{position:absolute;right:12px;top:10px;color:var(--muted);font-size:24px;line-height:1;padding:4px 8px}
+.mhead{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.mhead h3{margin:0;font-size:20px;letter-spacing:-.3px}
+.mhead .price{margin-left:auto;font-size:26px;font-weight:900;letter-spacing:-.5px}
+.mhead .price span{font-size:12px;color:var(--muted);font-weight:700}
+.perks{list-style:none;margin:0 0 16px;padding:0}
+.perks li{padding:7px 0 7px 26px;position:relative;color:#d7deee;font-size:14px;border-bottom:1px dashed var(--line)}
+.perks li:before{content:"✓";position:absolute;left:4px;color:var(--green);font-weight:900}
+#paypal-btn{min-height:48px;margin-bottom:10px}
+.restore{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.restore label{display:block;color:var(--muted);font-size:12.5px;margin-bottom:6px}
+.restore .row{display:flex;gap:8px}
+.restore input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--pill);color:var(--text);outline:none;font-weight:700}
+.restore .btn{flex:none;padding:10px 14px}
+.pmsg{padding:8px 0 0;font-size:13px;min-height:18px}
+.pmsg.err{color:var(--red)}.pmsg.ok{color:var(--green)}
+.acct{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 14px}
+.acct div{background:var(--pill);border-radius:12px;padding:10px 12px}
+.acct .k{color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;font-weight:800}
+.acct .v{font-weight:800;margin-top:2px;word-break:break-all}
 .bt{display:inline-block;font-style:normal;font-size:9.5px;font-weight:900;letter-spacing:.4px;padding:2px 6px;border-radius:5px;vertical-align:middle;line-height:1.3}
 .bx{font-style:normal;font-weight:900}
 .ev{display:inline-block;min-width:54px;text-align:center;padding:3px 7px;border-radius:7px;font-size:12px;font-weight:800;font-variant-numeric:tabular-nums}
@@ -240,7 +273,7 @@ b{font-weight:700}
 <header class="nav"><div class="wrap navrow">
   <div class="brand"><div class="mark">F</div><span>Fair<em>Parlay</em></span><span id="demoBadge" class="badge" style="display:none">demo prices</span></div>
   <nav class="sports"><button class="on">🏈 NFL</button><button disabled>NBA <small>soon</small></button><button disabled>NHL <small>soon</small></button><button disabled>MLB <small>soon</small></button></nav>
-  <div class="navright"><div class="asof" id="asof">loading…</div><button class="slipbtn" id="slipBtn">Bet slip <span class="n" id="slipN">0</span></button></div>
+  <div class="navright"><div class="asof" id="asof">loading…</div><span id="proNav"></span><button class="slipbtn" id="slipBtn">Bet slip <span class="n" id="slipN">0</span></button></div>
 </div></header>
 
 <main class="wrap">
@@ -284,6 +317,7 @@ b{font-weight:700}
 </main>
 <div class="bar" id="bar"><span class="n" id="barN">0</span> Bet slip <span class="i" id="barInfo"></span></div>
 <div class="toast" id="toast"></div>
+<div class="modal" id="proModal"><div class="mbox" id="proBox"></div></div>
 
 <script>
 (function(){
@@ -299,6 +333,14 @@ const LIVE_URL="https://fairparlay-feed.matt-fixnotice.workers.dev";
 const REFRESH_SEC=30;
 let D=null,C=null,view="games",picked=[],open={},sub={},stake=10,sgpQuote="",byId={},lastAdded=null;
 let LIVE=new URLSearchParams(location.search).get("feed")||LIVE_URL,roster=null,moved={},lastFetch=0,feedError="",watches=[],watchTarget="";
+// Pro: everyone gets FREE_TICKETS tickets with everything open; after that a $5.99/month PayPal subscription,
+// verified by the worker. A ticket is counted when a leg goes into an empty slip (the counter lives in this browser).
+const FREE_TICKETS=3;
+let PRO={on:false,cfg:null,checked:false,sub:null,exp:0,token:null};
+const trialUsed=()=>{try{return +localStorage.getItem("fp.trial")||0}catch(e){return 0}};
+const trialLeft=()=>Math.max(0,FREE_TICKETS-trialUsed());
+const proActive=()=>PRO.checked&&PRO.cfg&&PRO.cfg.enabled;          // the subscription system is configured
+const gated=()=>proActive()&&!PRO.on&&trialLeft()<=0;                 // trial used up and no subscription
 
 // ---------- odds math
 const impl=a=>a>0?100/(a+100):-a/(-a+100);
@@ -389,8 +431,9 @@ function gameCard(g,legs,forceGroup){const H=g.home,A=g.away;const gl=legs.filte
   const secs={};for(const l of legs)(secs[GROUP[l.m]]=secs[GROUP[l.m]]||[]).push(l);
   const groups=PGROUPS.filter(x=>secs[x]&&(x!=="Game lines"||secs[x].length>6));
   if(groups.length){const cur=forceGroup||(sub[g.id]&&secs[sub[g.id]]?sub[g.id]:groups.find(x=>x!=="Game lines")||groups[0]);
-    html+=`<button class="more">${open[g.id]||forceGroup?"Hide":"More wagers"} <span class="chev">▾</span></button><div class="props">`;
-    if(open[g.id]||forceGroup){
+    const locked=gated();
+    html+=locked?`<button class="more locked">🔒 More wagers — Go Pro to keep building</button><div class="props">`:`<button class="more">${open[g.id]||forceGroup?"Hide":"More wagers"} <span class="chev">▾</span></button><div class="props">`;
+    if((open[g.id]||forceGroup)&&!locked){
       if(!forceGroup)html+=`<div class="ptabs">${groups.map(x=>`<button class="${x===cur?"on":""}" data-sub="${x}">${x} <span style="opacity:.6">${secs[x].length}</span></button>`).join("")}</div>`;
       const ls=secs[cur]||[];
       if(cur==="Game lines"){html+=`<div class="lines player">`;for(const m of["spreads","totals"]){const rows=ls.filter(l=>l.m===m&&(m==="spreads"?l.t===H:l.s==="over"));if(!rows.length)continue;html+=`<div class="sect">${m==="spreads"?"All spreads":"All totals"}</div>`;for(const l of rows.sort((a,b)=>a.pt-b.pt)){const o=byId[l.pair];html+=m==="spreads"?`<div class="mrow"><div class="ml">${g.home_name.split(" ").pop()} <b>${fmtA(l.pt)}</b> / ${g.away_name.split(" ").pop()} <b>${fmtA(-l.pt)}</b></div>${pill(l,H+" "+fmtA(l.pt))}${pill(o,A+" "+fmtA(-l.pt))}</div>`:`<div class="mrow"><div class="ml">Total <b>${l.pt}</b></div>${pill(l,"Over")}${pill(o,"Under")}</div>`}}html+=`</div>`}
@@ -416,7 +459,10 @@ function renderBoard(){const q=($("#q").value||"").trim().toLowerCase();const el
   el.innerHTML=html||`<div class="empty">Nothing matches "${q}".</div>`;el.classList.remove("loading")}
 const rankable=l=>l.nb>=2&&l.fair>=1/6&&(l.m!=="player_anytime_td"||l.nb>=3);   // no long shots: books disagree most there and a stale price looks like "value"
 function renderBoosts(){const all=[];for(const g of D.games)for(const l of g.legs){const bb=best(l);if(!bb||!rankable(l))continue;all.push({l,ev:evOf(l.fair,bb.dec),bb})}
-  all.sort((a,b)=>b.ev-a.ev);$("#boosts").innerHTML=all.slice(0,4).map(({l,ev,bb})=>`<div class="boost" data-id="${l.id}">${l.p?avatar(l):tbadge(l.t)}<div class="t"><b>${l.lbl}</b><span>${l.game.away} @ ${l.game.home} · fair ${fmtA(amer(l.fair))}</span></div><div class="px">${fmtA(bb.am)}<small>${btag(bb.b)} ${evChip(ev)}</small></div></div>`).join("")||`<div class="empty">No multi-book legs yet.</div>`}
+  all.sort((a,b)=>b.ev-a.ev);const row=({l,ev,bb})=>`<div class="boost" data-id="${l.id}">${l.p?avatar(l):tbadge(l.t)}<div class="t"><b>${l.lbl}</b><span>${l.game.away} @ ${l.game.home} · fair ${fmtA(amer(l.fair))}</span></div><div class="px">${fmtA(bb.am)}<small>${btag(bb.b)} ${evChip(ev)}</small></div></div>`;
+  if(!all.length){$("#boosts").innerHTML=`<div class="empty">No multi-book legs yet.</div>`;return}
+  if(gated()){$("#boosts").innerHTML=row(all[0])+`<div class="lockwrap"><div class="blur">${all.slice(1,4).map(row).join("")}</div><div class="lockcta"><b>3 more on the board right now</b><span>Your ${FREE_TICKETS} free tickets are used — Pro keeps every leg on the slate ranked by its edge over fair.</span><button class="btn primary" style="flex:none;padding:9px 16px">Go Pro · $${PRO.cfg.price}/mo</button></div></div>`}
+  else $("#boosts").innerHTML=all.slice(0,4).map(row).join("")}
 
 // ---------- bet slip
 function bookRows(legs){const rows=[];for(const b of SHOWN){let d=1,ok=true,alts=[];for(const l of legs){const q=priceAt(b,l);if(!q){ok=false;break}d*=dec(q.am);if(q.alt!=null)alts.push(`${(l.p||l.lbl.split(" ")[0])} ${fmtA(q.alt).replace("+","")}`)}if(ok)rows.push({b,name:bname(b),dec:d,alts})}return rows.sort((a,b)=>b.dec-a.dec)}
@@ -424,6 +470,7 @@ function renderSlip(){const el=$("#parlay");const n=picked.length;for(const id o
   if(!n){el.innerHTML=`<div class="empty"><div class="ic">🎟️</div>Your slip is empty.<br><span style="font-size:12.5px">Tap any price to add it — we'll show the true odds as you build.</span></div>`;return}
   const J=joint(picked);const sameGame=new Set(picked.map(l=>l.gid)).size<n;
   let html=picked.map(l=>{const bb=best(l);return`<div class="sl"${l.id===lastAdded?' style="animation-duration:.5s"':' style="animation:none"'}>${l.p?avatar(l):tbadge(l.t)}<div class="t"><b>${l.lbl}</b><span>${l.game.away} @ ${l.game.home} · fair ${pct(l.fair)}</span></div><div class="pr">${bb?fmtA(bb.am):"—"}<small>${bb?btag(bb.b):""}</small></div><button class="rm" data-rm="${l.id}" aria-label="remove">×</button></div>`}).join("");
+  if(proActive()&&!PRO.on)html+=`<div class="corr" style="margin-top:8px">${trialLeft()?`Free ticket ${trialUsed()} of ${FREE_TICKETS}`:"Your last free ticket"} — <button class="link" id="goPro2" style="color:var(--gold);padding:0;font-size:inherit">Go Pro</button> for unlimited tickets and alerts.</div>`;
   if(J.conflict){html+=`<div class="danger">Two of these legs can't both win — they're opposite sides of the same market.</div><div class="actions"><button class="btn" id="clear2">Clear slip</button></div>`;el.innerHTML=html;$("#barInfo").textContent="conflict";return}
   const fairDec=J.p>0?1/J.p:0;
   html+=`<div class="truth"><div><div class="k">True odds</div><div class="v" id="trueOdds">${pct(J.p)}<small>${J.p>0?fmtA(amer(J.p)):""}</small></div></div><div><div class="k">Fair payout · $${money(stake)}</div><div class="v">$${(stake*fairDec).toFixed(2)}</div></div></div>`;
@@ -438,7 +485,8 @@ function renderSlip(){const el=$("#parlay");const n=picked.length;for(const id o
   html+=`</div>`;
   if(missing.length&&rows.length)html+=`<div class="fine" style="padding-top:8px">Not offering every leg: ${missing.map(bname).join(", ")}.</div>`;
   html+=`<div class="sgp"><label>${sameGame?"Same-game ticket — your book will quote its own price. Paste it to grade it:":"Got a boost or a Kalshi quote? Paste it to grade it:"}</label><input id="sgp" placeholder="e.g. +650" value="${sgpQuote}" inputmode="numeric"><div class="res" id="sgpRes"></div></div>`;
-  html+=`<div class="watch"><label>Watch this ticket — alert me when any book pays at least</label><div class="row"><input id="wtarget" placeholder="e.g. +650" value="${watchTarget}" inputmode="numeric"><button class="btn" id="watchBtn">Watch</button></div>${"Notification"in window&&Notification.permission!=="granted"?`<button class="link" id="notifBtn">Turn on browser alerts</button>`:""}<div class="fine" style="padding:6px 0 0">${LIVE?`Checked every ${REFRESH_SEC}s while this page is open.`:"Needs the live feed to re-check (see README)."}</div></div>`;
+  if(proActive()&&!PRO.on)html+=`<div class="watch"><label>Watch this ticket and get alerted when a book reaches your price</label><button class="btn" id="watchPro" style="width:100%">🔒 Alerts are part of Pro</button></div>`;
+  else html+=`<div class="watch"><label>Watch this ticket — alert me when any book pays at least</label><div class="row"><input id="wtarget" placeholder="e.g. +650" value="${watchTarget}" inputmode="numeric"><button class="btn" id="watchBtn">Watch</button></div>${"Notification"in window&&Notification.permission!=="granted"?`<button class="link" id="notifBtn">Turn on browser alerts</button>`:""}<div class="fine" style="padding:6px 0 0">${LIVE?`Checked every ${REFRESH_SEC}s while this page is open.`:"Needs the live feed to re-check (see README)."}</div></div>`;
   html+=`<div class="actions"><button class="btn primary" id="copy">Copy ticket</button><button class="btn" id="clear2">Clear</button></div><div class="fine">FairParlay takes no bets. "Pays" is each book's straight multiplication of its own leg prices; "Edge" is your expected return per dollar at the true odds.</div>`;
   el.innerHTML=html;sgpResult(J);
   const br=rows[0];$("#barInfo").innerHTML=`${pct(J.p)} true${br?` · best ${br.name} ${fmtA(amer(1/br.dec))}`:""}`;
@@ -446,8 +494,7 @@ function renderSlip(){const el=$("#parlay");const n=picked.length;for(const id o
   el.querySelectorAll(".q").forEach(b=>b.addEventListener("click",()=>{stake=+b.dataset.q;lastAdded=null;renderSlip()}));
   el.querySelector("#sgp").addEventListener("input",e=>{sgpQuote=e.target.value;sgpResult(J)});
   el.querySelector("#copy").addEventListener("click",()=>copySummary(J,rows));
-  el.querySelector("#wtarget").addEventListener("input",e=>{watchTarget=e.target.value});
-  el.querySelector("#watchBtn").addEventListener("click",()=>addWatch());
+  const wt=el.querySelector("#wtarget");if(wt){wt.addEventListener("input",e=>{watchTarget=e.target.value});el.querySelector("#watchBtn").addEventListener("click",()=>addWatch())}
   const nb=el.querySelector("#notifBtn");if(nb)nb.addEventListener("click",()=>Notification.requestPermission().then(()=>renderSlip()));
   el.querySelector("#clear2").addEventListener("click",()=>{picked=[];save();renderAll()});
   if(lastAdded){const v=$("#trueOdds");if(v)countUp(v,J.p)}
@@ -469,6 +516,8 @@ function priceAt(b,l){if(l.px[b]!=null)return{am:l.px[b],alt:null};const tol=TOL
   for(const o of l.game.legs){if(o===l||o.m!==l.m||o.p!==l.p||o.s!==l.s||o.t!==l.t||o.px[b]==null)continue;const d=Math.abs(o.pt-l.pt);if(d<=tol&&(!hit||d<hit.d))hit={am:o.px[b],alt:o.pt,d}}
   return hit}
 function toggle(id,el){const l=byId[id];if(!l)return;const i=picked.findIndex(x=>x.id===id);
+  if(i<0&&picked.length===0&&proActive()&&!PRO.on){if(trialLeft()<=0){openPro(`You've used your ${FREE_TICKETS} free tickets.`);return}
+    try{localStorage.setItem("fp.trial",String(trialUsed()+1))}catch(e){}const left=trialLeft();toast(left?`Free ticket ${FREE_TICKETS-left} of ${FREE_TICKETS} — ${left} left after this one`:`Last free ticket — Go Pro to keep building`);renderNav()}
   if(i>=0){picked.splice(i,1);lastAdded=null}else{picked.push(l);lastAdded=id;for(const s of["#slipN","#barN","#slipN2"]){const n=$(s);n.classList.remove("pop");void n.offsetWidth;n.classList.add("pop")}const b=$("#bar");b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop");if(el&&el.classList.contains("pill")){el.classList.add("sq")}}
   save();renderAll()}
 
@@ -477,8 +526,12 @@ document.addEventListener("click",e=>{
   const p=e.target.closest(".pill,.bl,.boost");if(p&&p.dataset.id){toggle(p.dataset.id,p);return}
   const rm=e.target.closest("[data-rm]");if(rm){picked=picked.filter(x=>x.id!==rm.dataset.rm);lastAdded=null;save();renderAll();return}
   const st=e.target.closest(".ptabs button");if(st){const g=st.closest(".game").dataset.g;sub[g]=st.dataset.sub;renderBoard();return}
-  const more=e.target.closest(".more");if(more){const g=more.closest(".game").dataset.g;open[g]=!open[g];renderBoard();return}
-  const chip=e.target.closest(".chip");if(chip){view=chip.dataset.view;document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===chip));renderBoard();return}
+  const more=e.target.closest(".more");if(more){if(gated()){openPro(`You've used your ${FREE_TICKETS} free tickets.`);return}const g=more.closest(".game").dataset.g;open[g]=!open[g];renderBoard();return}
+  const chip=e.target.closest(".chip");if(chip){if(gated()&&chip.dataset.view!=="games"){openPro(`You've used your ${FREE_TICKETS} free tickets.`);return}view=chip.dataset.view;document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===chip));renderBoard();return}
+  if(e.target.closest("#goPro")||e.target.closest("#goPro2")){openPro();return}
+  if(e.target.closest("#proNavPill")){openPro();return}
+  if(e.target.closest("#watchPro")||e.target.closest(".lockcta .btn")){openPro();return}
+  if(e.target.closest(".mclose")||(e.target.id==="proModal")){$("#proModal").classList.remove("show");return}
   if(e.target.closest("#clear")){picked=[];save();renderAll();return}
   if(e.target.closest("#bar")||e.target.closest("#slipBtn")){$("#slip").classList.add("show");return}
   if(e.target.closest("#closeSlip")){$("#slip").classList.remove("show");return}
@@ -557,7 +610,7 @@ async function loadLive(){const url=LIVE==="demo"?"data/feed_demo.json":LIVE.rep
 async function loadStatic(){const legs=await fetch("data/legs.json",{cache:"no-store"}).then(r=>r.json());apply(legs)}
 function asof(){const el=$("#asof");if(!D)return;const when=new Date(D.generated),age=Math.max(0,(Date.now()-when)/1000),nb=SHOWN.length;
   if(D.live){const stale=age>15*60;el.innerHTML=`<span class="livedot${stale||feedError?" off":""}"></span><b>${feedError?"Feed unreachable":stale?"Feed paused":"Live"}</b> · prices ${age<90?Math.round(age)+"s":age<5400?Math.round(age/60)+" min":when.toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"})} ago<br>${nb} sportsbooks + Kalshi · ${D.games.length} games`}
-  else el.innerHTML=`Prices as of <b>${when.toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"})}</b><br>${nb} sportsbooks + Kalshi · ${D.games.length} games`}
+  else el.innerHTML=`${LIVE&&feedError?`<span class="livedot off"></span><b style="color:var(--red)">Live feed failed:</b> ${feedError.slice(0,60)}<br>`:""}Prices as of <b>${when.toLocaleString([],{weekday:"short",hour:"numeric",minute:"2-digit"})}</b> · ${nb} sportsbooks + Kalshi · ${D.games.length} games`}
 function saveWatches(){try{localStorage.setItem("fp.watches",JSON.stringify(watches))}catch(e){}}
 function addWatch(){const d=parseOdds(watchTarget);if(!d){toast("Enter the odds you want, like +650");return}if(!picked.length)return;
   watches.push({id:"w"+Date.now(),legs:picked.map(l=>l.id),labels:picked.map(l=>l.lbl),target:d,created:Date.now(),hit:null});saveWatches();watchTarget="";toast("Watching this ticket");checkWatches(true);renderSlip()}
@@ -574,13 +627,46 @@ document.addEventListener("click",e=>{const u=e.target.closest("[data-unwatch]")
 setInterval(()=>{if(D)asof()},5000);
 setInterval(()=>{if(LIVE&&D&&document.visibilityState==="visible"&&Date.now()-lastFetch>=REFRESH_SEC*1000-500)loadLive().catch(e=>{feedError=e.message;asof()})},5000);
 
+// ---------- Pro: PayPal subscription verified by the worker
+function proSave(){try{localStorage.setItem("fp.pro",JSON.stringify({sub:PRO.sub,exp:PRO.exp,token:PRO.token}))}catch(e){}}
+function proLoad(){try{const t=JSON.parse(localStorage.getItem("fp.pro")||"null");if(t){PRO.sub=t.sub;PRO.exp=t.exp;PRO.token=t.token}}catch(e){}}
+const wurl=p=>LIVE.replace(/\/$/,"")+p;
+async function proInit(){proLoad();
+  if(!LIVE||LIVE==="demo"){PRO.checked=true;renderNav();return}
+  try{PRO.cfg=await fetch(wurl("/config")).then(r=>r.json())}catch(e){PRO.cfg=null}
+  if(PRO.cfg&&PRO.cfg.enabled){
+    if(PRO.token){const v=await fetch(wurl("/verify?token="+encodeURIComponent(PRO.token))).then(r=>r.json()).catch(()=>null);
+      if(v&&v.ok){PRO.on=true;PRO.exp=v.exp;if(v.exp-Date.now()<3*86400e3)activate(PRO.sub,true)}
+      else if(PRO.sub)await activate(PRO.sub,true)}
+  }
+  PRO.checked=true;renderNav();renderBoosts();renderAll()}
+async function activate(sub,silent){const msg=$("#proMsg");if(msg){msg.className="pmsg";msg.textContent="Checking with PayPal…"}
+  let r=null;try{r=await fetch(wurl("/activate?sub="+encodeURIComponent(sub))).then(x=>x.json())}catch(e){r={ok:false,error:"Couldn't reach the server"}}
+  if(r.ok){PRO.on=true;PRO.sub=sub.trim().toUpperCase();PRO.exp=r.exp;PRO.token=r.token;proSave();if(!silent){toast("Pro unlocked — welcome");$("#proModal").classList.remove("show")}renderNav();renderBoosts();renderAll()}
+  else{PRO.on=false;if(!silent||msg){if(msg){msg.className="pmsg err";msg.textContent=r.error||"Couldn't verify"}}if(silent){PRO.token=null;proSave();renderNav();renderBoosts();renderAll()}}
+  return r}
+function renderNav(){const el=$("#proNav");if(!el)return;if(!PRO.checked||!PRO.cfg||!PRO.cfg.enabled){el.innerHTML="";return}
+  el.innerHTML=PRO.on?`<button class="propill" id="proNavPill">★ PRO</button>`:`<button class="probtn" id="goPro">${trialLeft()?`${trialLeft()} free ticket${trialLeft()>1?"s":""} left · `:""}Go Pro · $${PRO.cfg.price}/mo</button>`}
+function openPro(reason){const box=$("#proBox");const m=$("#proModal");if(!PRO.cfg||!PRO.cfg.enabled)return;
+  if(PRO.on){box.innerHTML=`<button class="mclose" aria-label="close">×</button><div class="mhead"><span class="propill">★ PRO</span><h3>You're a Pro member</h3></div><div class="acct"><div><div class="k">Subscription</div><div class="v">${PRO.sub}</div></div><div><div class="k">Good through</div><div class="v">${new Date(PRO.exp).toLocaleDateString([],{month:"short",day:"numeric"})}</div></div></div><div class="fine" style="padding:0 0 12px">Billing is handled by PayPal: <a href="https://www.paypal.com/myaccount/autopay/" target="_blank" rel="noopener">manage or cancel there</a>. To use Pro on another device, paste the subscription ID above into "Already subscribed" there.</div><div class="actions" style="padding:0"><button class="btn" id="proForget">Remove Pro from this device</button></div>`;
+    m.classList.add("show");box.querySelector("#proForget").addEventListener("click",()=>{PRO.on=false;PRO.token=null;PRO.sub=null;proSave();m.classList.remove("show");renderNav();renderBoosts();renderAll()});return}
+  box.innerHTML=`<button class="mclose" aria-label="close">×</button><div class="mhead"><span class="propill">★ PRO</span><h3>FairParlay Pro</h3><div class="price">$${PRO.cfg.price}<span>/month</span></div></div>${reason?`<div class="corr" style="margin:0 0 10px;color:var(--gold)">${reason}</div>`:""}<ul class="perks"><li>Unlimited tickets — every player prop, any number of legs, same-game correlation priced in</li><li>Live prices from nine books and Kalshi, refreshed every few minutes</li><li>Best Prices: every leg on the slate ranked by its edge over fair</li><li>Watch a ticket and get alerted when a book hits your price</li></ul><div id="paypal-btn"><div class="fine" style="padding:8px 0">Loading PayPal…</div></div><div class="restore"><label>Already subscribed? Paste the subscription ID from your PayPal receipt (starts with I-) to unlock this device</label><div class="row"><input id="subid" placeholder="I-XXXXXXXXXXXX" autocomplete="off"><button class="btn" id="restoreBtn">Unlock</button></div><div class="pmsg" id="proMsg"></div></div><div class="fine" style="padding:12px 0 0">Cancel anytime from your PayPal account. FairParlay takes no bets; prices are information, not advice. 21+.</div>`;
+  m.classList.add("show");box.querySelector("#restoreBtn").addEventListener("click",()=>activate(box.querySelector("#subid").value,false));
+  box.querySelector("#subid").addEventListener("keydown",e=>{if(e.key==="Enter")activate(e.target.value,false)});
+  paypalButton()}
+function paypalButton(){const mount=$("#paypal-btn");if(!mount)return;const render=()=>{if(!window.paypal){mount.innerHTML=`<div class="pmsg err">PayPal didn't load — paste your subscription ID below instead.</div>`;return}mount.innerHTML="";
+    window.paypal.Buttons({style:{shape:"pill",color:"gold",layout:"vertical",label:"subscribe",height:48},createSubscription:(d,a)=>a.subscription.create({plan_id:PRO.cfg.planId}),onApprove:d=>activate(d.subscriptionID,false),onError:()=>{const m=$("#proMsg");if(m){m.className="pmsg err";m.textContent="PayPal reported a problem — try again or paste your subscription ID."}}}).render("#paypal-btn")};
+  if(window.paypal)return render();if(document.getElementById("ppsdk")){document.getElementById("ppsdk").addEventListener("load",render);return}
+  const sc=document.createElement("script");sc.id="ppsdk";sc.src=`https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PRO.cfg.clientId)}&vault=true&intent=subscription&components=buttons`;sc.onload=render;sc.onerror=render;document.head.appendChild(sc)}
+
 // ---------- boot
 try{watches=JSON.parse(localStorage.getItem("fp.watches")||"[]")}catch(e){}
 fetch("data/corr.json",{cache:"no-store"}).then(r=>r.json()).catch(()=>({pairs:{}})).then(async corr=>{C=corr;
   try{if(LIVE)await loadLive();else await loadStatic()}
-  catch(e){if(LIVE){feedError=e.message;try{await loadStatic()}catch(e2){throw e}}else throw e}
+  catch(e){console.error("live feed:",e);if(LIVE){feedError=e.message||String(e);try{await loadStatic()}catch(e2){throw e}}else throw e}
   if(D.demo)$("#demoBadge").style.display="";
-  window.__fp={joint,rho,byId:()=>byId,build:buildFromFeed,apply};
+  window.__fp={joint,rho,byId:()=>byId,build:buildFromFeed,apply,PRO,activate,openPro};
+  proInit();
 }).catch(err=>{$("#board").innerHTML=`<div class="empty">Couldn't load prices (${err.message}). If you opened this file directly, run serve.bat and open http://localhost:8000/ instead.</div>`});
 })();
 </script>
