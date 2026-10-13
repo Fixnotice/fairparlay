@@ -113,6 +113,9 @@ b{font-weight:700}
 .mrow .pill{height:54px}
 .lines .mrow{grid-template-columns:minmax(0,1fr) 108px 108px}
 .sect{color:var(--dim);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;padding:12px 14px 2px}
+.altbtn{display:flex;align-items:center;gap:6px;padding:4px 0 6px;color:var(--dim);font-weight:700;font-size:12px;transition:color .2s}
+.altbtn:hover{color:var(--text)}.altbtn span{opacity:.7}.altbtn .chev{display:inline-block;transition:transform .3s var(--ease2)}.altbtn.on .chev{transform:rotate(180deg)}
+.mrow.alt .ml{font-size:12px}.mrow.alt .ml b{font-weight:700}.mrow.alt .pill{height:48px}
 /* best list */
 .best{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .best .intro{padding:14px 16px;color:var(--muted);font-size:13px;border-bottom:1px solid var(--line)}
@@ -321,7 +324,7 @@ const $=s=>document.querySelector(s);
 // Leave empty to read the GitHub copy (data/legs.json). ?feed=demo in the address bar uses the demo feed.
 const LIVE_URL="https://fairparlay-feed.matt-fixnotice.workers.dev";
 const REFRESH_SEC=30;
-let D=null,C=null,view="games",picked=[],open={},sub={},stake=10,sgpQuote="",byId={},lastAdded=null;
+let D=null,C=null,view="games",picked=[],open={},sub={},altOpen={},stake=10,sgpQuote="",byId={},lastAdded=null;
 let LIVE=new URLSearchParams(location.search).get("feed")||LIVE_URL,roster=null,moved={},lastFetch=0,feedError="",watches=[],watchTarget="";
 // Pro: everyone gets FREE_TICKETS tickets with everything open; after that a $5.99/month PayPal subscription,
 // verified by the worker. A ticket is counted when a leg goes into an empty slip (the counter lives in this browser).
@@ -361,6 +364,7 @@ const pct=p=>(p*100).toFixed(p<.1?2:1)+"%";
 const fee=p=>0.07*p*(1-p);
 function kalshiDec(kx){return 1/(kx.ask+fee(kx.ask))}
 function qnorm(p){const a=[-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00],b=[-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01],c=[-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00],d=[7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];const pl=.02425,ph=1-pl;let q,r;if(p<pl){q=Math.sqrt(-2*Math.log(p));return(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}if(p<=ph){q=p-.5;r=q*q;return(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1)}q=Math.sqrt(-2*Math.log(1-p));return-(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5])/((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1)}
+function pnorm(x){const t=1/(1+0.2316419*Math.abs(x)),d=0.3989422804014327*Math.exp(-x*x/2),p=d*t*(0.319381530+t*(-0.356563782+t*(1.781477937+t*(-1.821255978+t*1.330274429))));return x>=0?1-p:p}
 function rng(seed){let s=seed>>>0;return()=>{s+=0x6D2B79F5;let t=s;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
 function cholesky(R){const n=R.length,L=Array.from({length:n},()=>new Array(n).fill(0));for(let i=0;i<n;i++){for(let j=0;j<=i;j++){let s=R[i][j];for(let k=0;k<j;k++)s-=L[i][k]*L[j][k];if(i===j){if(s<=1e-10)return null;L[i][i]=Math.sqrt(s)}else L[i][j]=s/L[j][j]}}return L}
 function look(k){const v=C&&C.pairs&&C.pairs[k];return v?v.rho:0}
@@ -448,10 +452,14 @@ function gameCard(g,legs,forceGroup){const H=g.home,A=g.away;const gl=legs.filte
       const ls=secs[cur]||[];
       if(cur==="Game lines"){html+=`<div class="lines player">`;for(const m of["spreads","totals"]){const rows=ls.filter(l=>l.m===m&&(m==="spreads"?l.t===H:l.s==="over"));if(!rows.length)continue;html+=`<div class="sect">${m==="spreads"?"All spreads":"All totals"}</div>`;for(const l of rows.sort((a,b)=>a.pt-b.pt)){const o=byId[l.pair];html+=m==="spreads"?`<div class="mrow"><div class="ml">${g.home_name.split(" ").pop()} <b>${fmtA(l.pt)}</b> / ${g.away_name.split(" ").pop()} <b>${fmtA(-l.pt)}</b></div>${pill(l,H+" "+fmtA(l.pt))}${pill(o,A+" "+fmtA(-l.pt))}</div>`:`<div class="mrow"><div class="ml">Total <b>${l.pt}</b></div>${pill(l,"Over")}${pill(o,"Under")}</div>`}}html+=`</div>`}
       else{const byP={};for(const l of ls)(byP[l.p]=byP[l.p]||[]).push(l);
-        for(const p in byP){const L=byP[p];const mk={};for(const l of L)(mk[l.m+"|"+l.pt]=mk[l.m+"|"+l.pt]||{})[l.s]=l;
+        for(const p in byP){const L=byP[p];const byM={};for(const l of L){const o=(byM[l.m]=byM[l.m]||{std:{},alt:{}});const d=l.alt?o.alt:o.std;(d[l.pt]=d[l.pt]||{})[l.s]=l}
           html+=`<div class="player"><div class="phead">${avatar(L[0])}<div><div class="nm">${p}</div><div class="pos">${L[0].t||""}${L[0].pos?" · "+L[0].pos:""}</div></div></div>`;
-          for(const k in mk){const o=mk[k].over,u=mk[k].under;const l=o||u;const nm=D.markets[l.m]||l.m;
-            html+=l.m==="player_anytime_td"?`<div class="mrow"><div class="ml">${nm}</div>${pill(o,"Yes")}${pill(u,"No")}</div>`:`<div class="mrow"><div class="ml">${nm}<b>${l.pt}</b></div>${pill(o,"Over")}${pill(u,"Under")}</div>`}
+          for(const m in byM){const nm=D.markets[m]||m,{std,alt}=byM[m];
+            for(const k in std){const o=std[k].over,u=std[k].under;const l=o||u;
+              html+=m==="player_anytime_td"?`<div class="mrow"><div class="ml">${nm}</div>${pill(o,"Yes")}${pill(u,"No")}</div>`:`<div class="mrow"><div class="ml">${nm}<b>${l.pt}</b></div>${pill(o,"Over")}${pill(u,"Under")}</div>`}
+            const pts=Object.keys(alt).map(Number).sort((a,b)=>a-b);
+            if(pts.length){const key=`${g.id}|${p}|${m}`,on=!!altOpen[key];html+=`<button class="altbtn${on?" on":""}" data-alt="${key}">${on?"Fewer":"More"} ${nm} lines <span>${pts.length}</span> <span class="chev">▾</span></button>`;
+              if(on)for(const pt of pts){const o=alt[pt].over,u=alt[pt].under;html+=`<div class="mrow alt"><div class="ml">${nm}<b>${g6(pt)}</b></div>${pill(o,"Over")}${pill(u,"Under")}</div>`}}}
           html+=`</div>`}}
     }
     html+=`</div>`}
@@ -467,7 +475,7 @@ function renderBoard(){const q=($("#q").value||"").trim().toLowerCase();const el
       if(q&&!open[g.id])open[g.id]=true;
       html+=gameCard(g,legs,grp)}}
   el.innerHTML=html||`<div class="empty">Nothing matches "${q}".</div>`;el.classList.remove("loading")}
-const rankable=l=>l.nb>=2&&l.fair>=1/6&&(!CF.oneSided[l.m]||l.nb>=3);   // no long shots: books disagree most there and a stale price looks like "value"
+const rankable=l=>l.nb>=2&&l.fair>=1/6&&(!CF.oneSided[l.m]||l.nb>=3)&&(!l.alt||l.fair<=5/6);   // no long shots: books disagree most there and a stale price looks like "value"
 function renderBoosts(){const all=[];for(const g of D.games)for(const l of g.legs){const bb=best(l);if(!bb||!rankable(l))continue;all.push({l,ev:evOf(l.fair,bb.dec),bb})}
   all.sort((a,b)=>b.ev-a.ev);const row=({l,ev,bb})=>`<div class="boost" data-id="${l.id}">${l.p?avatar(l):tbadge(l.t)}<div class="t"><b>${l.lbl}</b><span>${l.game.away} @ ${l.game.home} · fair ${fmtA(amer(l.fair))}</span></div><div class="px">${fmtA(bb.am)}<small>${btag(bb.b)} ${evChip(ev)}</small></div></div>`;
   if(!all.length){$("#boosts").innerHTML=`<div class="empty">No multi-book legs yet.</div>`;return}
@@ -521,7 +529,7 @@ function save(){try{localStorage.setItem("fp.picked."+SPORT,JSON.stringify(picke
 function load(){try{const ids=JSON.parse(localStorage.getItem("fp.picked."+SPORT)||"[]");picked=ids.map(id=>byId[id]).filter(Boolean)}catch(e){}}
 function index(){byId={};for(const g of D.games){const game={id:g.id,home:g.home,away:g.away,commence:g.commence,legs:g.legs};for(const l of g.legs){l.gid=g.id;l.game=game;byId[l.id]=l}}}
 // a book that doesn't post this exact line usually posts one a half-point away: use that price and say so
-const TOL={player_pass_yds:2.5,player_rush_yds:2.5,player_reception_yds:2.5,player_receptions:0.5,player_pass_tds:0.5,spreads:0.5,totals:0.5};
+const TOL={player_pass_yds:2.5,player_rush_yds:2.5,player_reception_yds:2.5,player_receptions:0.5,player_pass_tds:0.5,player_points:1.5,player_rebounds:0.5,player_assists:0.5,player_threes:0.5,player_points_rebounds_assists:1.5,spreads:0.5,totals:0.5};
 function priceAt(b,l){if(l.px[b]!=null)return{am:l.px[b],alt:null};const tol=TOL[l.m];if(tol==null||l.pt==null)return null;let hit=null;
   for(const o of l.game.legs){if(o===l||o.m!==l.m||o.p!==l.p||o.s!==l.s||o.t!==l.t||o.px[b]==null)continue;const d=Math.abs(o.pt-l.pt);if(d<=tol&&(!hit||d<hit.d))hit={am:o.px[b],alt:o.pt,d}}
   return hit}
@@ -536,6 +544,7 @@ document.addEventListener("click",e=>{
   const p=e.target.closest(".pill,.bl,.boost");if(p&&p.dataset.id){toggle(p.dataset.id,p);return}
   const rm=e.target.closest("[data-rm]");if(rm){picked=picked.filter(x=>x.id!==rm.dataset.rm);lastAdded=null;save();renderAll();return}
   const st=e.target.closest(".ptabs button");if(st){const g=st.closest(".game").dataset.g;sub[g]=st.dataset.sub;renderBoard();return}
+  const ab=e.target.closest(".altbtn");if(ab){altOpen[ab.dataset.alt]=!altOpen[ab.dataset.alt];renderBoard();return}
   const more=e.target.closest(".more");if(more){if(gated()){openPro(`You've used your ${FREE_TICKETS} free tickets.`);return}const g=more.closest(".game").dataset.g;open[g]=!open[g];renderBoard();return}
   const chip=e.target.closest(".chip");if(chip){if(gated()&&chip.dataset.view!=="games"){openPro(`You've used your ${FREE_TICKETS} free tickets.`);return}view=chip.dataset.view;document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===chip));renderBoard();return}
   if(e.target.closest("#goPro")||e.target.closest("#goPro2")){openPro();return}
@@ -576,17 +585,36 @@ function featuredLegs(ev){const home=ev.home_team,away=ev.away_team,H=CF.ABBR[ho
   for(const pt of Object.keys(tot).map(Number).sort((a,b)=>a-b)){const bks=tot[pt];const [fair,nb,sharp]=consensus(Object.fromEntries(Object.entries(bks).map(([b,[o,u]])=>[b,devig(o,u)])));const io=`${eid}:totals:over:${g6(pt)}`,iu=`${eid}:totals:under:${g6(pt)}`;
     legs.push(mk(io,"totals","total","over",`Over ${g6(pt)}`,fair,nb,sharp,pick(bks,0),{pt,pair:iu}),mk(iu,"totals","total","under",`Under ${g6(pt)}`,r4(1-fair),nb,sharp,pick(bks,1),{pt,pair:io}))}
   return legs}
+// Alternate lines: a book's ladder of other lines for the same stat (market "<stat>_alternate", usually Over only).
+// They are merged with the standard line by (stat, player, line). The standard line keeps the book consensus;
+// every other line is priced off a normal curve fitted through all the lines the books post for that player
+// (de-vigged with each book's hold at its main line), anchored so it passes through the consensus at the main line.
+function fitLadder(pts,anchor){let sw=0,sx=0,sy=0,sxx=0,sxy=0;const seen=new Set();
+  for(const q of pts){if(q.pt==null)continue;seen.add(q.pt);const z=qnorm(q.p);sw+=q.w;sx+=q.w*q.pt;sy+=q.w*z;sxx+=q.w*q.pt*q.pt;sxy+=q.w*q.pt*z}
+  if(seen.size<2)return null;const den=sw*sxx-sx*sx;if(den<=1e-9)return null;const sl=(sw*sxy-sx*sy)/den;if(!(sl<0))return null;
+  const sigma=Math.min(Math.max(-1/sl,0.3),250);const mu=anchor?anchor.pt+sigma*qnorm(anchor.p):-((sy-sl*sx)/sw)/sl;return{mu,sigma}}
 function propLegs(ev,ros,H,A){const eid=ev.id,legs=[],groups={};
-  for(const bk of ev.bookmakers||[])for(const m of bk.markets||[]){if(!CF.STAT_OF[m.key]||["h2h","spreads","totals"].includes(m.key))continue;
+  for(const bk of ev.bookmakers||[])for(const m of bk.markets||[]){const alt=m.key.endsWith("_alternate"),base=alt?m.key.slice(0,-10):m.key;if(!CF.STAT_OF[base]||["h2h","spreads","totals"].includes(base)||(alt&&CF.oneSided[base]))continue;
     for(const o of m.outcomes||[]){const player=o.description||"";const side={Over:"Over",Yes:"Over",Under:"Under",No:"Under"}[o.name];if(!player||!side)continue;const pl=player.toLowerCase();if(CF.NOT_PLAYERS.some(x=>pl.includes(x)))continue;
-      const key=`${m.key}|${player}|${o.point??""}`;((groups[key]=groups[key]||{market:m.key,player,point:o.point??null,books:{}}).books[bk.key]=groups[key].books[bk.key]||{})[side]=o.price}}
-  for(const key in groups){const {market,player,point,books}=groups[key];const probs={},over={},under={};
-    for(const b in books){const sd=books[b];if("Over"in sd&&"Under"in sd)probs[b]=devig(sd.Over,sd.Under);else if("Over"in sd&&CF.oneSided[market])probs[b]=oneSidedFair(market,sd.Over);else if("Over"in sd)continue;if("Over"in sd)over[b]=sd.Over;if("Under"in sd)under[b]=sd.Under}
-    const [fair,nb,sharp]=consensus(probs,!!CF.oneSided[market]);if(fair==null||!Object.keys(over).length)continue;
-    let [t,pos]=ros[normName(player)]||[null,null];if(t!==H&&t!==A)t=null;
-    const stat=CF.STAT_OF[market],nm=CF.MARKETS[market],pn=normName(player).replace(/ /g,"_"),x={t,p:player,pos};
-    if(CF.oneSided[market]){const io=`${eid}:${market}:${pn}:yes`,iu=`${eid}:${market}:${pn}:no`;legs.push(mk(io,market,stat,"over",`${player} ${nm}`,fair,nb,sharp,over,{...x,pair:iu}));if(Object.keys(under).length)legs.push(mk(iu,market,stat,"under",`${player} No ${nm.replace(/^Anytime /,"")}`,r4(1-fair),nb,sharp,under,{...x,pair:io}))}
-    else{const io=`${eid}:${market}:${pn}:${g6(point)}:over`,iu=`${eid}:${market}:${pn}:${g6(point)}:under`;legs.push(mk(io,market,stat,"over",`${player} Over ${g6(point)} ${nm}`,fair,nb,sharp,over,{...x,pt:point,pair:iu}));if(Object.keys(under).length)legs.push(mk(iu,market,stat,"under",`${player} Under ${g6(point)} ${nm}`,r4(1-fair),nb,sharp,under,{...x,pt:point,pair:io}))}}
+      const key=`${base}|${player}|${o.point??""}`;const g=(groups[key]=groups[key]||{market:base,player,point:o.point??null,books:{},std:false});(g.books[bk.key]=g.books[bk.key]||{})[side]=o.price;if(!alt)g.std=true}}
+  const byPM={};for(const key in groups){const g=groups[key];(byPM[g.market+"|"+g.player]=byPM[g.market+"|"+g.player]||[]).push(g)}
+  for(const k in byPM){const gs=byPM[k],market=gs[0].market,player=gs[0].player;
+    for(const g of gs){g.probs={};g.over={};g.under={};for(const b in g.books){const sd=g.books[b];
+      if("Over"in sd&&"Under"in sd)g.probs[b]=devig(sd.Over,sd.Under);else if("Over"in sd&&CF.oneSided[market])g.probs[b]=oneSidedFair(market,sd.Over);else if("Over"in sd&&g.std)continue;   // a lone Over on a standard line: not enough to price it
+      if("Over"in sd)g.over[b]=sd.Over;if("Under"in sd)g.under[b]=sd.Under}
+      [g.fair,g.nb,g.sharp]=consensus(g.probs,!!CF.oneSided[market]);g.alt=false}
+    if(gs.some(g=>!g.std)){const main=gs.filter(g=>g.std&&g.fair!=null).sort((a,b)=>(b.nb-a.nb)||((b.sharp?1:0)-(a.sharp?1:0)))[0]||null;
+      const hold={};if(main)for(const b in main.books){const sd=main.books[b];if("Over"in sd&&"Under"in sd)hold[b]=impl(sd.Over)+impl(sd.Under)-1}
+      const hs=Object.values(hold).sort((a,b)=>a-b),hmed=hs.length?hs[hs.length>>1]:0.06,pts=[];
+      for(const g of gs)for(const b in g.books){const sd=g.books[b];let p,w;if("Over"in sd&&"Under"in sd){p=devig(sd.Over,sd.Under);w=3}else if("Over"in sd){p=impl(sd.Over)/(1+(hold[b]??hmed));w=1}else continue;if(p>.05&&p<.95)pts.push({pt:g.point,p,w})}
+      const fit=fitLadder(pts,main?{pt:main.point,p:main.fair}:null);
+      for(const g of gs)if(!g.std){g.alt=true;if(fit&&g.point!=null){g.fair=r4(pnorm((fit.mu-g.point)/fit.sigma));g.nb=Object.keys(g.over).length;g.sharp=false}
+        else if(g.fair==null){const pr={};for(const b in g.over)pr[b]=impl(g.over[b])*0.91;[g.fair,g.nb,g.sharp]=consensus(pr,true)}}}
+    for(const g of gs){const {point,over,under,fair,nb,sharp,alt}=g;if(fair==null||!Object.keys(over).length)continue;
+      let [t,pos]=ros[normName(player)]||[null,null];if(t!==H&&t!==A)t=null;
+      const stat=CF.STAT_OF[market],nm=CF.MARKETS[market],pn=normName(player).replace(/ /g,"_"),x={t,p:player,pos};
+      if(CF.oneSided[market]){const io=`${eid}:${market}:${pn}:yes`,iu=`${eid}:${market}:${pn}:no`;legs.push(mk(io,market,stat,"over",`${player} ${nm}`,fair,nb,sharp,over,{...x,pair:iu}));if(Object.keys(under).length)legs.push(mk(iu,market,stat,"under",`${player} No ${nm.replace(/^Anytime /,"")}`,r4(1-fair),nb,sharp,under,{...x,pair:io}))}
+      else{const io=`${eid}:${market}:${pn}:${g6(point)}:over`,iu=`${eid}:${market}:${pn}:${g6(point)}:under`;legs.push(mk(io,market,stat,"over",`${player} Over ${g6(point)} ${nm}`,fair,nb,sharp,over,{...x,pt:point,pair:iu,alt}));if(Object.keys(under).length)legs.push(mk(iu,market,stat,"under",`${player} Under ${g6(point)} ${nm}`,r4(1-fair),nb,sharp,under,{...x,pt:point,pair:io,alt}))}}}
   return legs}
 const dollars=(m,k)=>{let v=m[k+"_dollars"]??m[k];if(v==null||v==="")return null;v=+v;return v>1?v/100:v};
 function attachKalshi(games,markets){const MON={JAN:0,FEB:1,MAR:2,APR:3,MAY:4,JUN:5,JUL:6,AUG:7,SEP:8,OCT:9,NOV:10,DEC:11};
@@ -679,7 +707,7 @@ renderMarketNav();renderSportsNav();
   try{if(LIVE)await loadLive();else await loadStatic()}
   catch(e){console.error("live feed:",e);if(LIVE){feedError=e.message||String(e);try{await loadStatic()}catch(e2){throw e}}else throw e}
   if(D.demo)$("#demoBadge").style.display="";
-  window.__fp={joint,rho,byId:()=>byId,build:buildFromFeed,apply,PRO,activate,openPro,setSport,sport:()=>SPORT};
+  window.__fp={joint,rho,best,byId:()=>byId,build:buildFromFeed,apply,PRO,activate,openPro,setSport,sport:()=>SPORT};
   proInit();
 })().catch(err=>{$("#board").innerHTML=`<div class="empty">Couldn't load prices (${err.message}). If you opened this file directly, run serve.bat and open http://localhost:8000/ instead.</div>`});
 })();
